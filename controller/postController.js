@@ -11,7 +11,7 @@ router.post("", async (req, res) => {
         console.log("adding post" + data)
         res.statusCode = 200;
         res.send({
-            message: `Successfully added post ${data}`
+            message: `Successfully added post`
         })
     }).catch((err) => {
         res.statusCode = 400;

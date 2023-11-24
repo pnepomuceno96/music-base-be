@@ -18,5 +18,8 @@
     "jwks": "^1.0.0",
     "jwks-rsa": "^3.1.0",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
