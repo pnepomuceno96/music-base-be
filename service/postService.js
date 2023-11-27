@@ -24,8 +24,26 @@ async function getPostsByUserId(user_id) {
     })
 }
 
-async function deletePostById(id) {
-
+async function deletePostById(user_id, post_id) {
+    // try {
+    //     const result = await postDAO.deletePostById(id);
+    //     console.log("post deleted", result);
+    //     if(result.Attributes.post_id !== post_id) {return false};
+    //     return true
+    // } catch (error) {
+    //     console.error("Post deletion error: " + error)
+    //     return false;
+    // }
+    return new Promise((resolve, rej) => {
+        postDAO.deletePostById(user_id, post_id).then((data) => {
+            console.log("Promise successfully resolved")
+            resolve(data)
+        })
+        .catch((err) => {
+            console.log("Promise rejected")
+            rej(err)
+        })
+    })
 }
 
 module.exports = {

@@ -34,4 +34,15 @@ router.get('/:user_id', async (req, res) => {
     })
 }) 
 
+router.delete('/:post_id', async (req, res) => {
+    const {user_id} = req.body; // Temporary line
+    const post_id = req.params.post_id
+    postService.deletePostById(user_id, post_id)
+    .then((data) => {
+        res.send({message: `Successfully deleted post ${data}`})
+    }).catch((err) => {
+        res.statusCode = 400
+        res.send({message: `Error: ${err}`})
+    })
+})
 module.exports = router

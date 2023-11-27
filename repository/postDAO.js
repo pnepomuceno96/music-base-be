@@ -41,12 +41,16 @@ function getPostsByUserId(user_id) {
     return docClient.query(params).promise();
 }
 
-function deletePostById(post_id) {
+function deletePostById(user_id, post_id) {
+    console.log(`post_id = ${post_id}`)
     const params = {
         TableName: TABLENAME,
+        IndexName: 'user_id-post_id-index',
         Key: {
-            "post_id": post_id
+            'user_id': user_id,
+            'post_id': post_id
         }
+        
     }
     return docClient.delete(params).promise();
 }
