@@ -9,14 +9,15 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 const TABLENAME = 'musicbaseposts'
 
 // Post can be added and optionally be associated with a MusicBrainz release group id
-function addPost(user_id, post_id, body, mbid) {
+function addPost(user_id, post_id, body, mbid, date) {
     const params = {
         TableName: TABLENAME,
         Item: {
             user_id,
             post_id,
             body,
-            mbid
+            mbid,
+            date
         }
     }
     if (!docClient) {
@@ -55,6 +56,20 @@ function deletePostById(user_id, post_id) {
     return docClient.delete(params).promise();
 }
 
+function getAllPostsPastWeek(lastweek) {
+    const params = {
+        TableName: TABLENAME,
+        FilterExpression: '#d >= :value',
+        ExpressionAttributeNames: {
+            '#d': 'date'
+        },
+        ExpressionAttributeValues: {
+            ':value': lastweek
+        }
+    }
+    return docClient.scan(params).promise();
+}
+
 module.exports = {
-    addPost, getPostsByUserId, deletePostById
+    addPost, getPostsByUserId, deletePostById, getAllPostsPastWeek
 }

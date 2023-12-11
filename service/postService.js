@@ -3,7 +3,7 @@ const uuid = require('uuid')
 
 async function addPost(user_id, body, mbid) {
     return new Promise((resolve, reject) => {
-        postDAO.addPost(user_id, uuid.v4(), body, mbid).then((data) => {
+        postDAO.addPost(user_id, uuid.v4(), body, mbid, Date.now()).then((data) => {
             resolve(data)
         }).catch((err) => {
             reject (err)})
@@ -46,6 +46,22 @@ async function deletePostById(user_id, post_id) {
     })
 }
 
+async function getAllPostsPastWeek() {
+    // lastweek = one week prior to now
+    const lastweek = Date.now() - 6.048e+8
+
+    const date = new Date(lastweek)
+    console.log(date.toString())
+    return new Promise((res, rej) => {
+        postDAO.getAllPostsPastWeek(lastweek).then((data) => {
+            res(data)
+        })
+        .catch((err) => {
+            rej(err)
+        })
+    })
+}
+
 module.exports = {
-    addPost, getPostsByUserId, deletePostById
+    addPost, getPostsByUserId, deletePostById, getAllPostsPastWeek
 }

@@ -21,6 +21,16 @@ router.post("", async (req, res) => {
     })
 })
 
+router.get('', async (req, res) => {
+    postService.getAllPostsPastWeek()
+    .then((data) => {
+        res.send({body: data.Items})
+    }).catch((err) => {
+        res.statusCode = 400
+        res.send({message: `Error: ${err}`})
+    })
+})
+
 router.get('/:user_id', async (req, res) => {
     const id = req.params.user_id
     console.log(`id: ${id}`)
